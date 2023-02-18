@@ -1,9 +1,8 @@
 [
 	{
 		"id": "1",
-		"name": "Allen Raymond",
-		"email": "nulla.ante@vestibul.co.uk",
-		"phone": "(992) 914-3792"
+		"name": "SSSSSSSS",
+		"email": "nulla.ante@vestibul.co.uk"
 	},
 	{
 		"id": "2",
@@ -52,19 +51,5 @@
 		"name": "Thomas Lucas",
 		"email": "nec@Nulla.com",
 		"phone": "(704) 398-7993"
-	},
-	{
-		"id": "10",
-		"name": "Alec Howard",
-		"email": "Donec.elementum@scelerisquescelerisquedui.net",
-		"phone": "(748) 206-2688"
-	},
-	{
-		"id": "11",
-		"name": {
-			"name": "SSSSSSS",
-			"email": "SSSSSSSSS",
-			"phone": "SSSSSSSSS"
-		}
 	}
 ]

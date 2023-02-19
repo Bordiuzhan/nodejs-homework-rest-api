@@ -7,7 +7,7 @@ const getAll = async (req, res) => {
   res.json(result);
 };
 
-const getBuId = async (req, res) => {
+const getById = async (req, res) => {
   const { contactId } = req.params;
   const result = await contacts.getContactById(contactId);
   console.log(result);
@@ -22,16 +22,16 @@ const add = async (req, res) => {
   res.status(201).json(result);
 };
 
-const updateBuId = async (req, res) => {
+const updateById = async (req, res) => {
   const { contactId } = req.params;
-  const result = await contacts.updateBuId(contactId, req.body);
+  const result = await contacts.updateById(contactId, req.body);
   if (!result) {
     throw HttpError(404, 'Server not found');
   }
   res.json(result);
 };
 
-const deleteBuId = async (req, res) => {
+const deleteById = async (req, res) => {
   const { contactId } = req.params;
   const result = await contacts.removeContact(contactId);
   if (!result) {
@@ -45,8 +45,8 @@ const deleteBuId = async (req, res) => {
 
 module.exports = {
   getAll: ctrlWrapper(getAll),
-  getBuId: ctrlWrapper(getBuId),
+  getById: ctrlWrapper(getById),
   add: ctrlWrapper(add),
-  updateBuId: ctrlWrapper(updateBuId),
-  deleteBuId: ctrlWrapper(deleteBuId),
+  updateById: ctrlWrapper(updateById),
+  deleteById: ctrlWrapper(deleteById),
 };

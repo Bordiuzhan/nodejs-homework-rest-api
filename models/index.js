@@ -37,13 +37,13 @@ const getContactById = async (contactId) => {
   return foundedContact || null;
 };
 
-const updateBuId = async (id, data) => {
+const updateById = async (id, data) => {
   const contacts = await listContacts();
   const index = contacts.findIndex((el) => parseInt(el.id) === Number(id));
   if (index === -1) {
     return null;
   }
-  contacts[index] = { id, ...data };
+  contacts[index] = { ...contacts[index], ...data };
   await rewriteContacts(contacts);
   return contacts[index];
 };
@@ -71,7 +71,7 @@ const addContact = async (name, email, phone) => {
 module.exports = {
   listContacts,
   getContactById,
-  updateBuId,
+  updateById: updateById,
   removeContact,
   addContact,
 };

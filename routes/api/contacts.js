@@ -6,11 +6,11 @@ const schema = require('../../shemas/contacts');
 
 router.get('/', ctrl.getAll);
 
-router.get('/:contactId', ctrl.getBuId);
+router.get('/:contactId', ctrl.getById);
 
 router.post('/', validateBody(schema.addSchema), ctrl.add);
 
-router.put('/:contactId', validateBody(schema.addSchema), ctrl.updateBuId);
+router.put('/:contactId', validateBody(schema.updateSchema), ctrl.updateById);
 
-router.delete('/:contactId', ctrl.deleteBuId);
+router.delete('/:contactId', ctrl.deleteById);
 module.exports = router;

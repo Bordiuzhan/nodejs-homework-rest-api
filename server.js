@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
 const app = require('./app');
-const DB_HOST =
-  'mongodb+srv://oleks:freedom2023@cluster0.cgf1jdk.mongodb.net/contacts_reader?retryWrites=true&w=majority';
+const { DB_HOST, PORT = 3000 } = process.env;
 
 mongoose.set('strictQuery', true);
 
 mongoose
   .connect(DB_HOST)
   .then(() =>
-    app.listen(3000, () => {
+    app.listen(PORT, () => {
       console.log('Database connection successful');
     })
   )

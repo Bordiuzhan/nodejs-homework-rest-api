@@ -1,27 +1,26 @@
 const { Contact } = require('../models/contact');
 const { ctrlWrapper } = require('../helpers/index');
-// const { HttpError } = require('../helpers');
+const { HttpError } = require('../helpers');
 
 const getAll = async (req, res) => {
   const result = await Contact.find();
-  console.log(Contact);
   res.json(result);
 };
 
-// const getById = async (req, res) => {
-//   const { contactId } = req.params;
-//   const result = await contacts.getContactById(contactId);
-//   console.log(result);
-//   if (!result) {
-//     throw HttpError(404, 'Server not found');
-//   }
-//   res.json(result);
-// };
+const getById = async (req, res) => {
+  const { contactId } = req.params;
+  // const result = await Contact.findOne(_id:contactId);
+  const result = await Contact.findById(contactId);
+  if (!result) {
+    throw HttpError(404, 'Server not found');
+  }
+  res.json(result);
+};
 
-// const add = async (req, res) => {
-//   const result = await contacts.addContact(req.body);
-//   res.status(201).json(result);
-// };
+const add = async (req, res) => {
+  const result = await Contact.create(req.body);
+  res.status(201).json(result);
+};
 
 // const updateById = async (req, res) => {
 //   const { contactId } = req.params;
@@ -46,8 +45,8 @@ const getAll = async (req, res) => {
 
 module.exports = {
   getAll: ctrlWrapper(getAll),
-  // getById: ctrlWrapper(getById),
-  // add: ctrlWrapper(add),
+  getById: ctrlWrapper(getById),
+  add: ctrlWrapper(add),
   // updateById: ctrlWrapper(updateById),
   // deleteById: ctrlWrapper(deleteById),
 };

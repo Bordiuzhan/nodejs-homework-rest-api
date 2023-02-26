@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose');
 const { handleMongooseError } = require('../helpers');
 const Joi = require('joi');
+const { HttpError } = require('../helpers');
 
 const dateRegexp = /^\d{3}-\d{2}-\d{2}-\d{2}$/;
 
@@ -44,7 +45,11 @@ const updateSchema = Joi.object({
   favorite: Joi.boolean(),
 });
 
-const schema = { addSchema, updateSchema };
+const updateFavoriteSchema = Joi.object({
+  favorite: Joi.boolean(),
+});
+
+const schema = { addSchema, updateSchema, updateFavoriteSchema };
 const Contact = model('contact', contactSchema);
 
 module.exports = { Contact, schema };

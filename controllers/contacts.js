@@ -22,14 +22,31 @@ const add = async (req, res) => {
   res.status(201).json(result);
 };
 
-// const updateById = async (req, res) => {
-//   const { contactId } = req.params;
-//   const result = await contacts.updateById(contactId, req.body);
-//   if (!result) {
-//     throw HttpError(404, 'Server not found');
-//   }
-//   res.json(result);
-// };
+const updateById = async (req, res) => {
+  const { contactId } = req.params;
+  const result = await Contact.findByIdAndUpdate(contactId, req.body, {
+    new: true,
+  });
+  if (!result) {
+    throw HttpError(404, 'Server not found');
+  }
+  res.json(result);
+};
+
+const updateStatusContact = async (req, res) => {
+  const { contactId } = req.params;
+  const { body } = req.body;
+  if (!body) {
+    throw HttpError(400, 'missing field favorite');
+  }
+  const result = await Contact.findByIdAndUpdate(contactId, body, {
+    new: true,
+  });
+  if (!result) {
+    throw HttpError(404, 'Server not found');
+  }
+  res.json(result);
+};
 
 // const deleteById = async (req, res) => {
 //   const { contactId } = req.params;
@@ -47,6 +64,7 @@ module.exports = {
   getAll: ctrlWrapper(getAll),
   getById: ctrlWrapper(getById),
   add: ctrlWrapper(add),
-  // updateById: ctrlWrapper(updateById),
+  updateById: ctrlWrapper(updateById),
+  updateStatusContact: ctrlWrapper(updateStatusContact),
   // deleteById: ctrlWrapper(deleteById),
 };

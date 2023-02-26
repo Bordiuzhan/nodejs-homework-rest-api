@@ -10,7 +10,19 @@ router.get('/:contactId', isValidId, ctrl.getById);
 
 router.post('/', validateBody(schema.addSchema), ctrl.add);
 
-// router.put('/:contactId',isValidId, validateBody(schema.updateSchema), ctrl.updateById);
+router.put(
+  '/:contactId',
+  isValidId,
+  validateBody(schema.updateSchema),
+  ctrl.updateById
+);
+
+router.patch(
+  '/:contactId/favorite',
+  isValidId,
+  validateBody(schema.updateFavoriteSchema),
+  ctrl.updateStatusContact
+);
 
 // router.delete('/:contactId',isValidId, ctrl.deleteById);
 module.exports = router;

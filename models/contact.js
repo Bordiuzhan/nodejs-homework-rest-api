@@ -1,7 +1,6 @@
 const { Schema, model } = require('mongoose');
 const { handleMongooseError } = require('../helpers');
 const Joi = require('joi');
-const { HttpError } = require('../helpers');
 
 const dateRegexp = /^\d{3}-\d{2}-\d{2}-\d{2}$/;
 

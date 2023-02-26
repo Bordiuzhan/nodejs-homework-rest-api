@@ -48,17 +48,17 @@ const updateStatusContact = async (req, res) => {
   res.json(result);
 };
 
-// const deleteById = async (req, res) => {
-//   const { contactId } = req.params;
-//   const result = await contacts.removeContact(contactId);
-//   if (!result) {
-//     throw HttpError(404, 'Server not found');
-//   }
-//   res.json({
-//     message: 'Delete success',
-//   });
-//   // res.status(204).send() // 204 Не передає меседж
-// };
+const deleteById = async (req, res) => {
+  const { contactId } = req.params;
+  const result = await Contact.findByIdAndRemove(contactId);
+  if (!result) {
+    throw HttpError(404, 'Server not found');
+  }
+  res.json({
+    message: 'Delete success',
+  });
+  // res.status(204).send() // 204 Не передає меседж
+};
 
 module.exports = {
   getAll: ctrlWrapper(getAll),
@@ -66,5 +66,5 @@ module.exports = {
   add: ctrlWrapper(add),
   updateById: ctrlWrapper(updateById),
   updateStatusContact: ctrlWrapper(updateStatusContact),
-  // deleteById: ctrlWrapper(deleteById),
+  deleteById: ctrlWrapper(deleteById),
 };

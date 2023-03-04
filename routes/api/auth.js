@@ -8,4 +8,7 @@ const route = express.Router();
 // signup
 route.post('/register', validateBody(schemas.registerSchema), ctrl.register);
 
+// signin
+route.post('/login', validateBody(schemas.loginSchema), ctrl.login);
+
 module.exports = route;

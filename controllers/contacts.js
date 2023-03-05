@@ -4,7 +4,10 @@ const { HttpError } = require('../helpers');
 
 const getAll = async (req, res) => {
   const { _id: owner } = req.user;
-  const result = await Contact.find({ owner }, '-email'); //.populate("owner","name email") - повертає зв'язаний об'єкт, певні поля;
+  const { page = 1, limit = 2 } = req.query;
+  const skip = (page - 1) * limit;
+  // eslint-disable-next-line spaced-comment
+  const result = await Contact.find({ owner }, '-email', { skip, limit }); //.populate("owner","name email") -  повертає зв'язаний об'єкт, певні поля;
   res.json(result);
 };
 

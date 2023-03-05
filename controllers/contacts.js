@@ -4,10 +4,27 @@ const { HttpError } = require('../helpers');
 
 const getAll = async (req, res) => {
   const { _id: owner } = req.user;
-  const { page = 1, limit = 2 } = req.query;
+  const { page = 1, limit = 2, favorite = '' } = req.query;
+  console.log(favorite);
   const skip = (page - 1) * limit;
-  // eslint-disable-next-line spaced-comment
-  const result = await Contact.find({ owner }, '-email', { skip, limit }); //.populate("owner","name email") -  повертає зв'язаний об'єкт, певні поля;
+  if (favorite === 'true' || favorite === 'false') {
+    console.log('goo');
+    const result = await Contact.find({ owner, favorite }, '-email', {
+      skip,
+      limit,
+    });
+    res.json(result);
+  }
+
+  const result = await Contact.find(
+    { owner },
+    '-email',
+    {
+      skip,
+      limit,
+    }
+    // eslint-disable-next-line spaced-comment
+  ); //.populate("owner","name email") -  повертає зв'язаний об'єкт, певні поля;
   res.json(result);
 };
 

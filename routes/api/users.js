@@ -13,6 +13,13 @@ route.post('/login', validateBody(schemas.loginSchema), ctrl.login);
 
 route.get('/current', authenticate, ctrl.getCurrent);
 
+route.patch(
+  '/',
+  authenticate,
+  validateBody(schemas.updateSubscriptionSchema),
+  ctrl.updateSubscription
+);
+
 route.post('/logout', authenticate, ctrl.logout);
 
 module.exports = route;

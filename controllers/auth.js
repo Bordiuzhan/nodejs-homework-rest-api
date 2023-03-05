@@ -49,20 +49,41 @@ const login = async (req, res) => {
   });
 };
 
+const getCurrent = async (req, res) => {
+  const { email, subscription } = req.user;
+  res.json({ email, subscription });
+};
+
+const updateSubscription = async (req, res) => {
+  const { _id } = req.user;
+  const { subscription } = req.body;
+  if (!req.body) {
+    throw HttpError(400, 'missing field subscription');
+  }
+  const result = await User.findByIdAndUpdate(
+    _id,
+    { subscription: subscription },
+    {
+      new: true,
+    }
+  );
+
+  if (!result) {
+    throw HttpError(404, 'Server not found');
+  }
+  res.json(result);
+};
+
 const logout = async (req, res) => {
   const { _id } = req.user;
   await User.findByIdAndUpdate(_id, { token: '' });
   res.status(204).json();
 };
 
-const getCurrent = async (req, res) => {
-  const { email, subscription } = req.user;
-  res.json({ email, subscription });
-};
-
 module.exports = {
   register: ctrlWrapper(register),
   login: ctrlWrapper(login),
   getCurrent: ctrlWrapper(getCurrent),
+  updateSubscription: ctrlWrapper(updateSubscription),
   logout: ctrlWrapper(logout),
 };

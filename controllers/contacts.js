@@ -3,7 +3,8 @@ const { ctrlWrapper } = require('../helpers/index');
 const { HttpError } = require('../helpers');
 
 const getAll = async (req, res) => {
-  const result = await Contact.find();
+  const { _id: owner } = req.user;
+  const result = await Contact.find({ owner }, '-email'); //.populate("owner","name email") - повертає зв'язаний об'єкт, певні поля;
   res.json(result);
 };
 
@@ -18,7 +19,8 @@ const getById = async (req, res) => {
 };
 
 const add = async (req, res) => {
-  const result = await Contact.create(req.body);
+  const { _id: owner } = req.user;
+  const result = await Contact.create({ ...req.body, owner });
   res.status(201).json(result);
 };
 

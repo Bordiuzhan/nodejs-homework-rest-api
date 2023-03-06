@@ -4,21 +4,24 @@ const { HttpError } = require('../helpers');
 
 const getAll = async (req, res) => {
   const { _id: owner } = req.user;
-  const { page = 1, limit = 2, favorite = '' } = req.query;
-  console.log(favorite);
+  const { page = 1, limit = 2, favorite, name, email } = req.query;
+  const searchParams = { owner };
   const skip = (page - 1) * limit;
+
   if (favorite === 'true' || favorite === 'false') {
-    console.log('goo');
-    const result = await Contact.find({ owner, favorite }, '-email', {
-      skip,
-      limit,
-    });
-    res.json(result);
+    searchParams.favorite = favorite;
+    searchParams.name = name;
+  }
+  if (name) {
+    searchParams.name = name;
+  }
+  if (email) {
+    searchParams.email = email;
   }
 
   const result = await Contact.find(
-    { owner },
-    '-email',
+    searchParams,
+    '-createdAt',
     {
       skip,
       limit,
@@ -30,8 +33,9 @@ const getAll = async (req, res) => {
 
 const getById = async (req, res) => {
   const { contactId } = req.params;
-  // const result = await Contact.findOne(_id:contactId);
-  const result = await Contact.findById(contactId);
+  const { _id: owner } = req.user;
+  const result = await Contact.findOne({ contactId, owner });
+  // const result = await Contact.findById(contactId);
   if (!result) {
     throw HttpError(404, 'Server not found');
   }

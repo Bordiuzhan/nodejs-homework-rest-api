@@ -3,14 +3,39 @@ const { ctrlWrapper } = require('../helpers/index');
 const { HttpError } = require('../helpers');
 
 const getAll = async (req, res) => {
-  const result = await Contact.find();
+  const { _id: owner } = req.user;
+  const { page = 1, limit = 2, favorite, name, email } = req.query;
+  const searchParams = { owner };
+  const skip = (page - 1) * limit;
+
+  if (favorite === 'true' || favorite === 'false') {
+    searchParams.favorite = favorite;
+    searchParams.name = name;
+  }
+  if (name) {
+    searchParams.name = name;
+  }
+  if (email) {
+    searchParams.email = email;
+  }
+
+  const result = await Contact.find(
+    searchParams,
+    '-createdAt',
+    {
+      skip,
+      limit,
+    }
+    // eslint-disable-next-line spaced-comment
+  ); //.populate("owner","name email") -  повертає зв'язаний об'єкт, певні поля;
   res.json(result);
 };
 
 const getById = async (req, res) => {
   const { contactId } = req.params;
-  // const result = await Contact.findOne(_id:contactId);
-  const result = await Contact.findById(contactId);
+  const { _id: owner } = req.user;
+  const result = await Contact.findOne({ contactId, owner });
+  // const result = await Contact.findById(contactId);
   if (!result) {
     throw HttpError(404, 'Server not found');
   }
@@ -18,7 +43,8 @@ const getById = async (req, res) => {
 };
 
 const add = async (req, res) => {
-  const result = await Contact.create(req.body);
+  const { _id: owner } = req.user;
+  const result = await Contact.create({ ...req.body, owner });
   res.status(201).json(result);
 };
 

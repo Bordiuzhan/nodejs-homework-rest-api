@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, SchemaTypes } = require('mongoose');
 const { handleMongooseError } = require('../helpers');
 const Joi = require('joi');
 
@@ -23,6 +23,10 @@ const contactSchema = new Schema(
       // 16-10-2009
       //  match:/^\d{2}-\d{2}-\d{4}$/;
       // enum:["fantastic", "love"];
+    },
+    owner: {
+      type: SchemaTypes.ObjectId,
+      ref: 'user',
     },
   },
   { versionKey: false, timestamps: true }

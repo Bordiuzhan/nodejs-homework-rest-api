@@ -8,6 +8,14 @@ const route = express.Router();
 // signup
 route.post('/register', validateBody(schemas.registerSchema), ctrl.register);
 
+route.get('/verify/:verificationToken', ctrl.verifyEmail);
+
+route.post(
+  '/verify',
+  validateBody(schemas.emailSchema),
+  ctrl.resendVerifyEmail
+);
+
 // signin
 route.post('/login', validateBody(schemas.loginSchema), ctrl.login);
 
